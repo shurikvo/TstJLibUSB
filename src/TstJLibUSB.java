@@ -1,3 +1,4 @@
+import ru.shurikvo.jlibusb.ConfigDescriptor;
 import ru.shurikvo.jlibusb.DeviceDescriptor;
 import ru.shurikvo.jlibusb.JLibUSB;
 
@@ -21,10 +22,11 @@ public class TstJLibUSB {
         }
         System.out.println("lib.getDeviceList: " + RC + ": OK");
 
-        for(int i = 0; i < nDev; ++i) {
+        for (int i = 0; i < nDev; ++i) {
             System.out.println(i + " ----------");
-            int nSpeed;
+            int nSpeed, nCfg;
             byte nAddr, nBusNum;
+            long[] pHdr = new long[1];
             String sB, sSpeed = "unknown";
 
             nAddr = lib.getDeviceAddress(pDev[0], i);
@@ -62,6 +64,66 @@ public class TstJLibUSB {
             sB = String.format("Dev (bus %02X, device %02X): %04X - %04X speed: %5.5s",
                     nBusNum,nAddr,desc.idVendor, desc.idProduct, sSpeed);
             System.out.println(sB);
+
+            RC = lib.open(pDev[0], i, pHdr);
+            if (RC < 0) {
+                System.out.println("lib.open: " + i + ": " + RC + ": " + lib.strError(RC));
+                continue;
+            }
+            System.out.println("lib.open: " + RC);
+
+            if(desc.iManufacturer > 0) {
+                sB = lib.getStringDescriptorASCII(pHdr[0], desc.iManufacturer);
+                if (sB != null)
+                    System.out.print("\tManufacturer: " + sB);
+            }
+            if(desc.iProduct > 0) {
+                sB = lib.getStringDescriptorASCII(pHdr[0], desc.iProduct);
+                if (sB != null)
+                    System.out.print("\tProduct: " + sB);
+            }
+            if(desc.iSerialNumber > 0) {
+                sB = lib.getStringDescriptorASCII(pHdr[0], desc.iSerialNumber);
+                if (sB != null)
+                    System.out.print("\tS/N: " + sB);
+            }
+            System.out.println();
+
+            nCfg = desc.bNumConfigurations;
+            System.out.println("Configurations: " + nCfg);
+
+            for (int j = 0; j < nCfg; ++j) {
+                long[] pConf = new long[1];
+                ConfigDescriptor conf = lib.getConfigDescriptor(pDev[0], i, (byte)j, pConf);
+                System.out.println("Length            : " + conf.bLength);
+                System.out.println("DescriptorType    : " + conf.bDescriptorType);
+                System.out.println("TotalLength       : " + conf.wTotalLength);
+                System.out.println("NumInterfaces     : " + conf.bNumInterfaces);
+                System.out.println("ConfigurationValue: " + conf.bConfigurationValue);
+                System.out.println("Configuration     : " + conf.iConfiguration);
+                System.out.println("Attributes        : " + String.format("%02X h",conf.bmAttributes));
+                System.out.println("Max Power         : " + (int)(conf.maxPower & 0xFF));
+                System.out.println("Extra Length      : " + conf.extraLength);
+
+/*
+    public byte bLength;
+    public byte bDescriptorType;
+    public short wTotalLength;
+    public byte bNumInterfaces;
+    public byte bConfigurationValue;
+    public byte iConfiguration;
+    public byte bmAttributes;
+    public byte MaxPower;
+    public InterfaceDescriptor[] interfaceArray;
+    public String extra;
+    public int extra_length;
+*/
+                lib.freeConfigDescriptor(pConf[0]);
+                System.out.println("lib.freeConfigDescriptor: OK");
+            }
+
+            lib.close(pHdr[0]);
+            System.out.println("lib.close: OK");
         }
         System.out.println("------------");
 

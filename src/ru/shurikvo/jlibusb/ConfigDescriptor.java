@@ -3,13 +3,14 @@ package ru.shurikvo.jlibusb;
 public class ConfigDescriptor {
     public byte bLength;
     public byte bDescriptorType;
-    public byte wTotalLength;
+    public short wTotalLength;
     public byte bNumInterfaces;
     public byte bConfigurationValue;
-    public byte Configuration;
+    public byte iConfiguration;
     public byte bmAttributes;
-    public byte MaxPower;
+    public byte maxPower;
     public InterfaceDescriptor[] interfaceArray;
     public String extra;
-    public int extra_length;
+    public int extraLength;
 }
+
