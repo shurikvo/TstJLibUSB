@@ -11,9 +11,9 @@ public class JLibUSB {
     native public static String strError(int err);
     native public static int getDeviceList(long context, long[] pDeviceList);
     native public static void freeDeviceList(long deviceList, int unrefDevices);
-    native public static int getDeviceDescriptor(long dev, DeviceDescriptor[] desc);
+    native public static DeviceDescriptor getDeviceDescriptor(long dev, int index);
     native public static int getConfigDescriptor(long dev, byte configIndex, ConfigDescriptor[][] config);
-    native public static int getConfigDescriptorByValue(long dev, byte bConfigurationValue, ConfigDescriptor[][] config);
+    //native public static int getConfigDescriptorByValue(long dev, byte bConfigurationValue, ConfigDescriptor[][] config);
     native public static void freeConfigDescriptor(ConfigDescriptor[] config);
     native public static byte getBusNumber(long dev, int index);
     native public static byte getDeviceAddress(long dev, int index);
