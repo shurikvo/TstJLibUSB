@@ -1,5 +1,6 @@
 import ru.shurikvo.jlibusb.ConfigDescriptor;
 import ru.shurikvo.jlibusb.DeviceDescriptor;
+import ru.shurikvo.jlibusb.InterfaceDescriptor;
 import ru.shurikvo.jlibusb.JLibUSB;
 
 public class TstJLibUSB {
@@ -93,31 +94,37 @@ public class TstJLibUSB {
             System.out.println("Configurations: " + nCfg);
 
             for (int j = 0; j < nCfg; ++j) {
+                int nInf;
                 long[] pConf = new long[1];
                 ConfigDescriptor conf = lib.getConfigDescriptor(pDev[0], i, (byte)j, pConf);
                 System.out.println("Length            : " + conf.bLength);
                 System.out.println("DescriptorType    : " + conf.bDescriptorType);
                 System.out.println("TotalLength       : " + conf.wTotalLength);
-                System.out.println("NumInterfaces     : " + conf.bNumInterfaces);
                 System.out.println("ConfigurationValue: " + conf.bConfigurationValue);
                 System.out.println("Configuration     : " + conf.iConfiguration);
                 System.out.println("Attributes        : " + String.format("%02X h",conf.bmAttributes));
                 System.out.println("Max Power         : " + (int)(conf.maxPower & 0xFF));
                 System.out.println("Extra Length      : " + conf.extraLength);
+                System.out.println("Extra             : " + conf.extra);
+                System.out.println("NumInterfaces     : " + conf.bNumInterfaces);
 
-/*
-    public byte bLength;
-    public byte bDescriptorType;
-    public short wTotalLength;
-    public byte bNumInterfaces;
-    public byte bConfigurationValue;
-    public byte iConfiguration;
-    public byte bmAttributes;
-    public byte MaxPower;
-    public InterfaceDescriptor[] interfaceArray;
-    public String extra;
-    public int extra_length;
-*/
+                if (conf.interfaceArray != null) {
+                    for (int k = 0; k < conf.interfaceArray.length; ++k) {
+                        System.out.println("Interface " + (k + 1) + ": ");
+                        System.out.println("    Length           : " + conf.interfaceArray[k].bLength);
+                        System.out.println("    InterfaceNumber  : " + conf.interfaceArray[k].bInterfaceNumber);
+                        System.out.println("    InterfaceClass   : " + conf.interfaceArray[k].bInterfaceClass);
+                        System.out.println("    InterfaceSubClass: " + conf.interfaceArray[k].bInterfaceSubClass);
+                        System.out.println("    InterfaceProtocol: " + conf.interfaceArray[k].bInterfaceProtocol);
+                        System.out.println("    Interface        : " + conf.interfaceArray[k].iInterface);
+                        System.out.println("    AlternateSetting : " + conf.interfaceArray[k].bAlternateSetting);
+                        System.out.println("    Extra Length     : " + conf.interfaceArray[k].extraLength);
+                        System.out.println("    Extra            : " + conf.interfaceArray[k].extra);
+                        System.out.println("    bNumEndpoints    : " + conf.interfaceArray[k].bInterfaceClass);
+                    }
+                } else {
+                    System.out.println("conf.interfaceArray: null");
+                }
                 lib.freeConfigDescriptor(pConf[0]);
                 System.out.println("lib.freeConfigDescriptor: OK");
             }

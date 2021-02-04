@@ -142,9 +142,10 @@ JNIEXPORT jstring JNICALL Java_ru_shurikvo_jlibusb_JLibUSB_getStringDescriptorAS
 
 JNIEXPORT jobject JNICALL Java_ru_shurikvo_jlibusb_JLibUSB_getConfigDescriptor(JNIEnv *env, jclass myclass, jlong deviceList, jint index, jbyte configIndex, jlongArray configList)
 {
-	int RC = 0;
+	int i, RC = 0;
 	struct libusb_config_descriptor *pDesc, desc;
 	libusb_device **Devs = (libusb_device **)deviceList;
+	jstring sExtra;
 
 	RC = libusb_get_config_descriptor(*(Devs + index), configIndex, &pDesc);
 	if (RC < 0) return NULL;
@@ -160,29 +161,70 @@ JNIEXPORT jobject JNICALL Java_ru_shurikvo_jlibusb_JLibUSB_getConfigDescriptor(J
 	jobject jo = env->NewObject(cls, constructor);
 	if (!jo) return NULL;
 
-	env->SetByteField(jo, env->GetFieldID(cls, "bLength", "B"), desc.bLength);
-	env->SetByteField(jo, env->GetFieldID(cls, "bDescriptorType", "B"), desc.bDescriptorType);
-	env->SetShortField(jo, env->GetFieldID(cls, "wTotalLength", "S"), desc.wTotalLength);
-	env->SetByteField(jo, env->GetFieldID(cls, "bNumInterfaces", "B"), desc.bNumInterfaces);
-	env->SetByteField(jo, env->GetFieldID(cls, "bConfigurationValue", "B"), desc.bConfigurationValue);
-	env->SetByteField(jo, env->GetFieldID(cls, "iConfiguration", "B"), desc.iConfiguration);
-	env->SetByteField(jo, env->GetFieldID(cls, "bmAttributes", "B"), desc.bmAttributes);
-	env->SetByteField(jo, env->GetFieldID(cls, "maxPower", "B"), desc.MaxPower);
-	env->SetIntField(jo, env->GetFieldID(cls, "extraLength", "I"), desc.extra_length);
-	//env->Set(jo, env->GetFieldID(cls, "extra", ""), desc.extra);
-	/*
-	public byte bLength;
-	public byte bDescriptorType;
-	public short wTotalLength;
-	public byte bNumInterfaces;
-	public byte bConfigurationValue;
-	public byte iConfiguration;
-	public byte bmAttributes;
-	public byte MaxPower;
-	public InterfaceDescriptor[] interfaceArray;
-	public String extra;
-	public int extra_length;
-*/
+	env->SetShortField(jo, env->GetFieldID(cls, "wTotalLength", "S"), (jshort)desc.wTotalLength);
+	env->SetByteField(jo, env->GetFieldID(cls, "bLength", "B"), (jbyte)desc.bLength);
+	env->SetByteField(jo, env->GetFieldID(cls, "bDescriptorType", "B"), (jbyte)desc.bDescriptorType);
+	env->SetByteField(jo, env->GetFieldID(cls, "bNumInterfaces", "B"), (jbyte)desc.bNumInterfaces);
+	env->SetByteField(jo, env->GetFieldID(cls, "bConfigurationValue", "B"), (jbyte)desc.bConfigurationValue);
+	env->SetByteField(jo, env->GetFieldID(cls, "iConfiguration", "B"), (jbyte)desc.iConfiguration);
+	env->SetByteField(jo, env->GetFieldID(cls, "bmAttributes", "B"), (jbyte)desc.bmAttributes);
+	env->SetByteField(jo, env->GetFieldID(cls, "maxPower", "B"), (jbyte)desc.MaxPower);
+	env->SetIntField(jo, env->GetFieldID(cls, "extraLength", "I"), (jint)desc.extra_length);
+
+	if (desc.extra_length)
+	{
+		sExtra = env->NewStringUTF((const char *)desc.extra);
+		env->SetObjectField(jo, env->GetFieldID(cls, "extra", "Ljava/lang/String;"), (jobject)sExtra);
+	}
+	//--------------------------------------------------------------------------------------
+	jclass clsI = env->FindClass("ru/shurikvo/jlibusb/InterfaceDescriptor");
+	if (!clsI) return NULL;
+
+	jmethodID constructorI = env->GetMethodID(clsI, "<init>", "()V");
+	if (!constructorI) return NULL;
+
+	jobject joI = env->NewObject(clsI, constructorI);
+	if (!joI) return NULL;
+
+	jobjectArray jaInterface = env->NewObjectArray((jsize)desc.bNumInterfaces, clsI, joI);
+	if (!jaInterface) return NULL;
+
+	jfieldID fid = env->GetFieldID(cls, "interfaceArray", "[Lru/shurikvo/jlibusb/InterfaceDescriptor;");
+	if (!fid) return NULL;
+
+	printf(">> NumInterfaces: %d\n", desc.bNumInterfaces);
+	for (i = 0; i < desc.bNumInterfaces; ++i)
+	{
+		//env->DeleteLocalRef(joI);
+		joI = env->NewObject(clsI, constructor);
+		env->SetByteField(joI, env->GetFieldID(clsI, "bDescriptorType", "B"), (jbyte)(desc.interface + i)->altsetting->bDescriptorType);
+		env->SetByteField(joI, env->GetFieldID(clsI, "bAlternateSetting", "B"), (jbyte)(desc.interface + i)->altsetting->bAlternateSetting);
+		env->SetByteField(joI, env->GetFieldID(clsI, "bInterfaceClass", "B"), (jbyte)(desc.interface + i)->altsetting->bInterfaceClass);
+		env->SetByteField(joI, env->GetFieldID(clsI, "bInterfaceNumber", "B"), (jbyte)(desc.interface + i)->altsetting->bInterfaceNumber);
+		env->SetByteField(joI, env->GetFieldID(clsI, "bInterfaceProtocol", "B"), (jbyte)(desc.interface + i)->altsetting->bInterfaceProtocol);
+		env->SetByteField(joI, env->GetFieldID(clsI, "bInterfaceSubClass", "B"), (jbyte)(desc.interface + i)->altsetting->bInterfaceSubClass);
+		env->SetByteField(joI, env->GetFieldID(clsI, "bLength", "B"), (jbyte)(desc.interface + i)->altsetting->bLength);
+		env->SetByteField(joI, env->GetFieldID(clsI, "bNumEndpoints", "B"), (jbyte)(desc.interface + i)->altsetting->bNumEndpoints);
+		env->SetByteField(joI, env->GetFieldID(clsI, "extraLength", "I"), (jbyte)(desc.interface + i)->altsetting->extra_length);
+		env->SetByteField(joI, env->GetFieldID(clsI, "iInterface", "B"), (jbyte)(desc.interface + i)->altsetting->iInterface);
+
+		if ((desc.interface + i)->altsetting->extra_length)
+		{
+			sExtra = env->NewStringUTF((const char *)(desc.interface + i)->altsetting->extra);
+			env->SetObjectField(joI, env->GetFieldID(clsI, "extra", "Ljava/lang/String;"), (jobject)sExtra);
+		}
+		env->SetObjectArrayElement(jaInterface, i, (jobject)joI);
+		printf(">> NumInterfaces.%d\n", i);
+
+		//env->SetObjectArrayElement(env->GetFieldID(cls, "extraLength", "I"), i, joI);
+		env->SetObjectField(jo, fid, (jobject)jaInterface);
+
+	}
+	//env->DeleteLocalRef(joI);
+	//env->DeleteLocalRef(jo);
+	env->DeleteLocalRef(clsI);
+	env->DeleteLocalRef(cls);
+
 	return jo;
 }
 

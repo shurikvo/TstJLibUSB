@@ -10,7 +10,7 @@ public class InterfaceDescriptor {
     public byte bInterfaceSubClass;
     public byte bInterfaceProtocol;
     public byte iInterface;
-    public EndpointDescriptor[] endpointArray;
-    public String extra;
-    public int extra_length;
+    public EndpointDescriptor[] endpointArray = new EndpointDescriptor[0];
+    public String extra = "";
+    public int extraLength;
 }

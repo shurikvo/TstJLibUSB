@@ -9,8 +9,8 @@ public class ConfigDescriptor {
     public byte iConfiguration;
     public byte bmAttributes;
     public byte maxPower;
-    public InterfaceDescriptor[] interfaceArray;
-    public String extra;
+    public InterfaceDescriptor[] interfaceArray = new InterfaceDescriptor[0];
+    public String extra = "";
     public int extraLength;
 }
 
