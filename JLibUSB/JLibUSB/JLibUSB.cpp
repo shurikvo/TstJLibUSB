@@ -257,19 +257,6 @@ JNIEXPORT jobject JNICALL Java_ru_shurikvo_jlibusb_JLibUSB_getConfigDescriptor(J
 			printf("JLibUSB: Endpoint.%d.%d\n", i, j);
 
 			env->SetObjectField(joI, fed, (jobject)jaEndpoint);
-
-
-/*  public byte bLength;
-    public byte bDescriptorType;
-    public byte bEndpointAddress;
-    public byte bmAttributes;
-    public short wMaxPacketSize;
-    public byte bInterval;
-    public byte bRefresh;
-    public byte bSynchAddress;
-    public String extra;
-    public int extraLength;
-*/
 		}
 
 		env->SetObjectField(jo, fid, (jobject)jaInterface);
