@@ -1,0 +1,224 @@
+"C:\Program Files\Java\jdk1.8.0_40\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.3.1\lib\idea_rt.jar=13031:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.3.1\bin" -Dfile.encoding=UTF-8 -classpath "C:\Program Files\Java\jdk1.8.0_40\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\deploy.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\ext\access-bridge-64.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\ext\cldrdata.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\ext\dnsns.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\ext\jaccess.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\ext\jfxrt.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\ext\localedata.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\ext\nashorn.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\ext\sunec.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\ext\sunjce_provider.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\ext\sunmscapi.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\ext\sunpkcs11.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\ext\zipfs.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\javaws.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\jfxswt.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\management-agent.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\plugin.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_40\jre\lib\rt.jar;E:\Java\IdeaProjectsRosan\TstJLibUSB\out\production\TstJLibUSB" TstJLibUSB
+lib.init: 0: Success
+lib.getDeviceList: 6: OK
+0 ----------
+Dev (bus 01, device 04): 046D - C050 speed: 1.5 M
+lib.open: 0
+	Manufacturer: Logitech	Product: USB-PS/2 Optical Mouse
+Configurations: 1
+Length            : 9
+DescriptorType    : 2
+TotalLength       : 34
+ConfigurationValue: 1
+Configuration     : 0
+Attributes        : A0 h
+Max Power         : 49
+Extra Length      : 0
+Extra             : 
+NumInterfaces     : 1
+Interface 1: 
+    Length           : 9
+    InterfaceNumber  : 0
+    InterfaceClass   : 3
+    InterfaceSubClass: 1
+    InterfaceProtocol: 2
+    Interface        : 0
+    AlternateSetting : 0
+    Extra Length     : 9
+    Extra            : 	!
+    bNumEndpoints    : 1
+    Endpoint 1.0: 
+        Length         : 7
+        MaxPacketSize  : 5
+        EndpointAddress: 81 h
+        DescriptorType : 5
+        Interval       : 10
+        bmAttributes   : 3
+        Refresh        : 0
+        SynchAddress   : 0
+        Extra Length   : 0
+        Extra          : 
+lib.freeConfigDescriptor: OK
+lib.close: OK
+1 ----------
+Dev (bus 01, device 02): 072F - 2224 speed:  12 M
+lib.open: 1: -12: Operation not supported or unimplemented on this platform
+2 ----------
+Dev (bus 01, device 01): 076B - 3021 speed:  12 M
+lib.open: 2: -12: Operation not supported or unimplemented on this platform
+3 ----------
+Dev (bus 01, device 05): 0C2E - 0901 speed:  12 M
+lib.open: 0
+	Manufacturer: Honeywell Imaging & Mobility    	Product: HID POS	S/N: 16011B35A5
+Configurations: 1
+Length            : 9
+DescriptorType    : 2
+TotalLength       : 73
+ConfigurationValue: 1
+Configuration     : 3
+Attributes        : A0 h
+Max Power         : 200
+Extra Length      : 0
+Extra             : 
+NumInterfaces     : 2
+Interface 1: 
+    Length           : 9
+    InterfaceNumber  : 0
+    InterfaceClass   : 3
+    InterfaceSubClass: 1
+    InterfaceProtocol: 1
+    Interface        : 4
+    AlternateSetting : 0
+    Extra Length     : 9
+    Extra            : 	!
+    bNumEndpoints    : 2
+    Endpoint 1.0: 
+        Length         : 7
+        MaxPacketSize  : 64
+        EndpointAddress: 84 h
+        DescriptorType : 5
+        Interval       : 8
+        bmAttributes   : 3
+        Refresh        : 0
+        SynchAddress   : 0
+        Extra Length   : 0
+        Extra          : 
+    Endpoint 1.1: 
+        Length         : 7
+        MaxPacketSize  : 64
+        EndpointAddress: 05 h
+        DescriptorType : 5
+        Interval       : 8
+        bmAttributes   : 3
+        Refresh        : 0
+        SynchAddress   : 0
+        Extra Length   : 0
+        Extra          : 
+Interface 2: 
+    Length           : 9
+    InterfaceNumber  : 1
+    InterfaceClass   : 3
+    InterfaceSubClass: 0
+    InterfaceProtocol: 0
+    Interface        : 5
+    AlternateSetting : 0
+    Extra Length     : 9
+    Extra            : 	!
+    bNumEndpoints    : 2
+    Endpoint 2.0: 
+        Length         : 7
+        MaxPacketSize  : 64
+        EndpointAddress: 82 h
+        DescriptorType : 5
+        Interval       : 8
+        bmAttributes   : 3
+        Refresh        : 0
+        SynchAddress   : 0
+        Extra Length   : 0
+        Extra          : 
+    Endpoint 2.1: 
+        Length         : 7
+        MaxPacketSize  : 64
+        EndpointAddress: 07 h
+        DescriptorType : 5
+        Interval       : 1
+        bmAttributes   : 3
+        Refresh        : 0
+        SynchAddress   : 0
+        Extra Length   : 0
+        Extra          : 
+lib.freeConfigDescriptor: OK
+lib.close: OK
+4 ----------
+Dev (bus 01, device 03): 1C4F - 0002 speed: 1.5 M
+lib.open: 0
+	Manufacturer: SIGMACHIP	Product: USB Keyboard
+Configurations: 1
+Length            : 9
+DescriptorType    : 2
+TotalLength       : 59
+ConfigurationValue: 1
+Configuration     : 0
+Attributes        : A0 h
+Max Power         : 49
+Extra Length      : 0
+Extra             : 
+NumInterfaces     : 2
+Interface 1: 
+    Length           : 9
+    InterfaceNumber  : 0
+    InterfaceClass   : 3
+    InterfaceSubClass: 1
+    InterfaceProtocol: 1
+    Interface        : 0
+    AlternateSetting : 0
+    Extra Length     : 9
+    Extra            : 	!
+    bNumEndpoints    : 1
+    Endpoint 1.0: 
+        Length         : 7
+        MaxPacketSize  : 8
+        EndpointAddress: 81 h
+        DescriptorType : 5
+        Interval       : 10
+        bmAttributes   : 3
+        Refresh        : 0
+        SynchAddress   : 0
+        Extra Length   : 0
+        Extra          : 
+Interface 2: 
+    Length           : 9
+    InterfaceNumber  : 1
+    InterfaceClass   : 3
+    InterfaceSubClass: 0
+    InterfaceProtocol: 0
+    Interface        : 0
+    AlternateSetting : 0
+    Extra Length     : 9
+    Extra            : 	!
+    bNumEndpoints    : 1
+    Endpoint 2.0: 
+        Length         : 7
+        MaxPacketSize  : 3
+        EndpointAddress: 82 h
+        DescriptorType : 5
+        Interval       : 10
+        bmAttributes   : 3
+        Refresh        : 0
+        SynchAddress   : 0
+        Extra Length   : 0
+        Extra          : 
+lib.freeConfigDescriptor: OK
+lib.close: OK
+5 ----------
+Dev (bus 01, device 00): 8086 - A2AF speed:   5 G
+lib.open: 5: -12: Operation not supported or unimplemented on this platform
+------------
+lib.freeDeviceList: OK
+lib.exit: OK
+============
+JLibUSB: NumInterfaces: 1
+JLibUSB: Interface.0
+JLibUSB: NumEndpoints: 1
+JLibUSB: Endpoint.0.0
+JLibUSB.libusb_open: RC = -12: Operation not supported or unimplemented on this platform
+JLibUSB.libusb_open: RC = -12: Operation not supported or unimplemented on this platform
+JLibUSB: NumInterfaces: 2
+JLibUSB: Interface.0
+JLibUSB: NumEndpoints: 2
+JLibUSB: Endpoint.0.0
+JLibUSB: Endpoint.0.1
+JLibUSB: Interface.1
+JLibUSB: NumEndpoints: 2
+JLibUSB: Endpoint.1.0
+JLibUSB: Endpoint.1.1
+JLibUSB: NumInterfaces: 2
+JLibUSB: Interface.0
+JLibUSB: NumEndpoints: 1
+JLibUSB: Endpoint.0.0
+JLibUSB: Interface.1
+JLibUSB: NumEndpoints: 1
+JLibUSB: Endpoint.1.0
+JLibUSB.libusb_open: RC = -12: Operation not supported or unimplemented on this platform
+
+Process finished with exit code 0

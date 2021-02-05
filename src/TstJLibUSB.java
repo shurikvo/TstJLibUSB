@@ -21,7 +21,7 @@ public class TstJLibUSB {
             System.out.println("lib.exit: OK");
             return;
         }
-        System.out.println("lib.getDeviceList: " + RC + ": OK");
+        System.out.println("lib.getDeviceList: " + nDev + ": OK");
 
         for (int i = 0; i < nDev; ++i) {
             System.out.println(i + " ----------");
@@ -120,7 +120,26 @@ public class TstJLibUSB {
                         System.out.println("    AlternateSetting : " + conf.interfaceArray[k].bAlternateSetting);
                         System.out.println("    Extra Length     : " + conf.interfaceArray[k].extraLength);
                         System.out.println("    Extra            : " + conf.interfaceArray[k].extra);
-                        System.out.println("    bNumEndpoints    : " + conf.interfaceArray[k].bInterfaceClass);
+                        System.out.println("    bNumEndpoints    : " + conf.interfaceArray[k].bNumEndpoints);
+
+                        if(conf.interfaceArray[k].endpointArray != null) {
+                            for (int l = 0; l < conf.interfaceArray[k].bNumEndpoints; ++l) {
+                                System.out.println("    Endpoint " + (k + 1) + "." + l + ": ");
+                                System.out.println("        Length         : " + conf.interfaceArray[k].endpointArray[l].bLength);
+                                System.out.println("        MaxPacketSize  : " + conf.interfaceArray[k].endpointArray[l].wMaxPacketSize);
+                                System.out.println("        EndpointAddress: " + String.format("%02X h", conf.interfaceArray[k].endpointArray[l].bEndpointAddress));
+                                System.out.println("        DescriptorType : " + conf.interfaceArray[k].endpointArray[l].bDescriptorType);
+                                System.out.println("        Interval       : " + conf.interfaceArray[k].endpointArray[l].bInterval);
+                                System.out.println("        bmAttributes   : " + conf.interfaceArray[k].endpointArray[l].bmAttributes);
+                                System.out.println("        Refresh        : " + conf.interfaceArray[k].endpointArray[l].bRefresh);
+                                System.out.println("        SynchAddress   : " + conf.interfaceArray[k].endpointArray[l].bSynchAddress);
+                                System.out.println("        Extra Length   : " + conf.interfaceArray[k].endpointArray[l].extraLength);
+                                System.out.println("        Extra          : " + conf.interfaceArray[k].endpointArray[l].extra);
+                            }
+                        } else {
+                            System.out.println("conf.interfaceArray[" + k + "].endpointArray: null");
+                        }
+
                     }
                 } else {
                     System.out.println("conf.interfaceArray: null");
@@ -139,5 +158,6 @@ public class TstJLibUSB {
 
         lib.exit(pContext[0]);
         System.out.println("lib.exit: OK");
+        System.out.println("============");
     }
 }

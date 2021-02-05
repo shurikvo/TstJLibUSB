@@ -5,10 +5,10 @@ public class EndpointDescriptor {
     public byte bDescriptorType;
     public byte bEndpointAddress;
     public byte bmAttributes;
-    public byte wMaxPacketSize;
+    public short wMaxPacketSize;
     public byte bInterval;
     public byte bRefresh;
     public byte bSynchAddress;
-    public String extra;
-    public int extra_length;
+    public String extra = "";
+    public int extraLength;
 }
